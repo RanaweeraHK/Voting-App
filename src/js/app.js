@@ -25,10 +25,12 @@ App = {
       App.web3Provider = window.web3.currentProvider;
       web3 = new Web3(window.web3.currentProvider);
     }
-    // If no injected web3 instance is detected, fall back to Ganache
+    // If no injected web3 instance is detected, fall back to a public network
     else {
-      App.web3Provider = new Web3.providers.HttpProvider('http://localhost:7545');
+      // Use Infura for Sepolia testnet instead of localhost
+      App.web3Provider = new Web3.providers.HttpProvider('https://sepolia.infura.io/v3/YOUR_INFURA_PROJECT_ID');
       web3 = new Web3(App.web3Provider);
+      alert("Please install MetaMask to use this dApp with your own account!");
     }
     return App.initContract();
   },
@@ -156,7 +158,8 @@ App = {
       // Show error message but still display the content
       loader.hide();
       content.show();
-      $("#candidatesResults").html("<tr><td colspan='3'>Could not load candidates.</td></tr>");
+      $("#candidatesResults").html("<tr><td colspan='3'>Could not load candidates. Please make sure you're connected to the correct Ethereum network in MetaMask.</td></tr>");
+      $("#accountAddress").html("Network Error: Please connect MetaMask to the correct network where the contract is deployed.");
     });
   },
 

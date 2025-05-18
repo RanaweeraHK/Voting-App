@@ -97,9 +97,9 @@ Run a specific test file:
 truffle test ./test/election.js
 ```
 
-## Running the Application
+## Running the Application Locally
 
-1. Deploy the contracts:
+1. Deploy the contracts to your local Ganache blockchain:
    ```bash
    truffle migrate --reset
    ```
@@ -116,6 +116,71 @@ truffle test ./test/election.js
 
 4. Connect your MetaMask to the application
 5. Cast your vote!
+
+## Deploying to a Public Testnet
+
+1. Install the HDWallet Provider:
+   ```bash
+   npm install @truffle/hdwallet-provider
+   ```
+
+2. Edit the `truffle-config.js` file to add your mnemonic and Infura project ID:
+   ```javascript
+   const mnemonic = 'YOUR_MNEMONIC'; // Your MetaMask seed phrase
+   const infuraProjectId = 'YOUR_INFURA_PROJECT_ID'; // Your Infura project ID
+   ```
+
+3. Deploy to the Sepolia testnet:
+   ```bash
+   truffle migrate --network sepolia
+   ```
+   - if you need to move with Ganache
+   ```bash
+   truffle migrate --reset
+   ```
+
+4. Note the contract address for future reference.
+- *While Ganache is great for local development, deploying to a testnet ensures your application works in a more realistic blockchain environment.*
+## Deploying to IPFS
+
+1. Make sure you have IPFS installed and running:
+   ```bash
+   # Install IPFS if you haven't already
+   # For Ubuntu/Debian:
+   wget https://dist.ipfs.io/go-ipfs/v0.18.1/go-ipfs_v0.18.1_linux-amd64.tar.gz
+   tar -xvzf go-ipfs_v0.18.1_linux-amd64.tar.gz
+   cd go-ipfs
+   sudo bash install.sh
+   ipfs init
+
+   # Start the IPFS daemon in another terminal
+   ipfs daemon
+   ```
+
+2. Build and deploy the distribution files:
+   ```bash
+   ./build-ipfs.sh
+   ```
+   - If not
+```bash
+ipfs add -r dist
+ipfs name publish <hash>
+```
+
+3. The script will:
+   - Create a dist directory with all necessary files
+   - Add the directory to IPFS and get a hash
+   - Publish the hash to IPNS for a more permanent link
+   - Output URLs where your application is available
+
+4. Access your dApp at:
+   - `https://ipfs.io/ipfs/<your-hash>`
+   - `https://ipfs.io/ipns/<your-ipns-name>` (more permanent)
+
+5. Users will need to:
+   - Have MetaMask installed
+   - Connect to the Sepolia testnet
+   - Have some Sepolia ETH (available from faucets)
 
 ## Smart Contract Structure
 
@@ -199,4 +264,5 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ![img_1.png](img_1.png)
 ![img.png](img.png)
+![img_2.png](img_2.png)
 

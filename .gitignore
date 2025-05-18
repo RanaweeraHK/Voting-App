@@ -4,6 +4,8 @@ out/
 !**/src/test/**/out/
 
 node_modules/
+go-ipfs/
+go-ipfs_v0.18.1_linux-amd64.tar.gz
 
 
 ### Eclipse ###
